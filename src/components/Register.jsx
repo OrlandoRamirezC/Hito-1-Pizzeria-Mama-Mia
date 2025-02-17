@@ -42,11 +42,11 @@ const RegisterPage = () => {
           </div>
           <div className="mb-3 col-md-3">
             <label htmlFor="contraseña" className="form-label">Contraseña</label>
-            <input type='contraseña' className='form-control' name='contraseña' value={users.contraseña} onChange={handleChange} placeholder='Escribe tu contraseña' />
+            <input type='password' className='form-control' name='contraseña' value={users.contraseña} onChange={handleChange} placeholder='Escribe tu contraseña' />
           </div>
           <div className="mb-3 col-md-3">
             <label htmlFor="confcontraseña" className="form-label">Confirmar contraseña</label>
-            <input type='confcontraseña' className='form-control' name='confcontraseña' value={users.confcontraseña} onChange={handleChange} placeholder='Confirma tu contraseña' />
+            <input type='password' className='form-control' name='confcontraseña' value={users.confcontraseña} onChange={handleChange} placeholder='Confirma tu contraseña' />
           </div>
           <button type="submit" className='btn btn-primary'>Crear cuenta</button>
         </form>

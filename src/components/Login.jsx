@@ -35,7 +35,7 @@ const LoginPage = () => {
           </div>
           <div className="mb-3 col-md-3">
             <label htmlFor="contraseña" className="form-label">Contraseña</label>
-            <input type='contraseña' className='form-control' name='contraseña' value={users.contraseña} onChange={handleChange} placeholder='Escribe tu contraseña' />
+            <input type='password' className='form-control' name='contraseña' value={users.contraseña} onChange={handleChange} placeholder='Escribe tu contraseña' />
           </div>
           <button type="submit" className='btn btn-primary'>Login</button>
         </form>
