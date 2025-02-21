@@ -10,7 +10,7 @@ const Home = () => {
       <div className="caja d-flex justify-content-center d-grid gap-4">
         {pizzas.map((pizza) => (
           <CardPizza
-            key={pizza.id}
+            id={pizza.id}
             nombre={pizza.name}
             precio={pizza.price}
             descripcion={pizza.desc}

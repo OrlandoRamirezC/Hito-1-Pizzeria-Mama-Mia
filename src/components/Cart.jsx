@@ -28,7 +28,7 @@ const Cart = () => {
   }
   const quitar = (id) => {
     const nuevoCart = cart.map((pizza) => {
-      if (pizza.id === id) {
+      if (pizza.id === id && pizza.count>0) {
         return {
           ...pizza,
           count: pizza.count - 1,
@@ -42,7 +42,7 @@ const Cart = () => {
     <>
       <main className='container m-3'>
         <h3>Detalles del pedido:</h3>
-        {pizzaCart.map((pizza) => (
+        {cart.map((pizza) => (
           <main className='container p-1 h-25 w-50 ' >
             <div className="caja" key={pizza.id}>
               <div className="cajita1">
