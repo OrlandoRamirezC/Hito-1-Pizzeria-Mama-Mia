@@ -1,13 +1,24 @@
 import Header from './Header'
 import CardPizza from './CardPizza'
-import { pizzas } from '../pizzas'
-import { Card } from 'react-bootstrap'
+/* import { pizzas } from '../pizzas' */
+import { useEffect, useState } from 'react'
 
 const Home = () => {
+  const [pizzas, setPizzas] = useState([])
+
+  const getPizzas = async () => {
+    const res = await fetch('http://localhost:5000/api/pizzas')
+    const data = await res.json()
+    return setPizzas(data)
+  }
+
+  useEffect(() => {
+    getPizzas()
+  }, [])
   return (
     <>
       <Header />
-      <div className="caja d-flex justify-content-center d-grid gap-4">
+      <div className="container-fluid d-flex flex-wrap gap-3 m-2 justify-content-center">
         {pizzas.map((pizza) => (
           <CardPizza
             id={pizza.id}
@@ -18,20 +29,6 @@ const Home = () => {
             ingredientes={pizza.ingredients}
           />
         ))}
-        {/*<CardPizza img={"https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_cl.jpg?alt=media&token=6a9a33da-5c00-49d4-9080-784dcc87ec2c"} nombre='Napolitana'
-          ingredientes={["mozzarella, ", "tomates, ", "jamón, ", "orégano"]} precio={5950} />
-        <CardPizza
-          nombre="Española"
-          precio={6950}
-          ingredientes={["mozzarella, ", "gorgonzola, ", "parmesano, ", "provolone"]}
-          img="https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fcheese-164872_640_com.jpg?alt=media&token=18b2b821-4d0d-43f2-a1c6-8c57bc388fab"
-        />
-        <CardPizza
-          nombre="Pepperoni"
-          precio={6950}
-          ingredientes={["mozzarella, ", "pepperoni, ", "orégano"]}
-          img="https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_com.jpg?alt=media&token=e7cde87a-08d5-4040-ac54-90f6c31eb3e3"
-        /> */}
       </div>
     </>
   )
