@@ -4,6 +4,7 @@ import Home from './components/Home'
 import NavBar from './components/Navbar'
 //import LoginPage from './components/Login'
 import Cart from './components/Cart'
+import Pizza from './components/Pizza'
 import { useEffect } from 'react'
 
 const App = () => {
@@ -14,10 +15,11 @@ const App = () => {
   return (
     <>
       <NavBar />
-      <Home />
+      {/* <Home /> */}
       {/*  <RegisterPage />
     <LoginPage /> */}
       {/*  <Cart /> */}
+      <Pizza />
       <Footer />
     </>
   )
