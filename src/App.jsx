@@ -1,10 +1,7 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import {Home, LoginPage, Cart, Pizza, RegisterPage, NotFound, Profile} from './pages/index'  //Barrels
 import Footer from './components/Footer'
-import Home from './components/Home'
-//import RegisterPage from './components/Register'
 import NavBar from './components/Navbar'
-//import LoginPage from './components/Login'
-import Cart from './components/Cart'
-import Pizza from './components/Pizza'
 import { useEffect } from 'react'
 
 const App = () => {
@@ -14,13 +11,19 @@ const App = () => {
   }, [])
   return (
     <>
+    <BrowserRouter>
       <NavBar />
-      {/* <Home /> */}
-      {/*  <RegisterPage />
-    <LoginPage /> */}
-      {/*  <Cart /> */}
-      <Pizza />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/cart' element={<Cart />} />
+        <Route path='/pizza/p001' element={<Pizza />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
       <Footer />
+      </BrowserRouter>
     </>
   )
 }
