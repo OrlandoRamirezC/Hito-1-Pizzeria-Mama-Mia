@@ -1,52 +1,20 @@
 
-import { pizzaCart } from '../pizzas'
 import '../components/cart.css'
-import { useState } from 'react'
+import { useContext } from 'react'
+import { CartContext } from '../context/CartContext'
 
 const Cart = () => {
-  const [cart, setCart] = useState(pizzaCart)
+const {cart, aumentar, quitar, calcularTotal}= useContext(CartContext)
 
-  const calcularTotal = () => {
-    let total = 0
-    cart.map((pizza) => {
-      total += pizza.price * pizza.count
-    })
-    return total
-  }
-
-  const aumentar = (id) => {
-    const nuevoCart = cart.map((pizza) => {
-      if (pizza.id === id) {
-        return {
-          ...pizza,
-          count: pizza.count + 1,
-        }
-      }
-      return pizza
-    })
-    setCart(nuevoCart)
-  }
-  const quitar = (id) => {
-    const nuevoCart = cart.map((pizza) => {
-      if (pizza.id === id && pizza.count>0) {
-        return {
-          ...pizza,
-          count: pizza.count - 1,
-        }
-      }
-      return pizza
-    })
-    setCart(nuevoCart)
-  }
   return (
     <>
       <main className='container m-3'>
         <h3>Detalles del pedido:</h3>
         {cart.map((pizza) => (
-          <main className='container p-1 h-25 w-50 ' >
-            <div className="caja" key={pizza.id}>
+          <main className='container p-1 h-25 w-50 ' key={pizza.id}>
+            <div className="caja" >
               <div className="cajita1">
-                <img src={pizza.img} alt='img' />
+                <img src={pizza.img} alt='img'/>
                 <p>{pizza.name}</p>
               </div>
               <div className="cajita2 d-flex align-items-center gap-2">
@@ -60,9 +28,9 @@ const Cart = () => {
         ))}
         <h2>Total: $ {calcularTotal()}</h2>
         <div className="container-fluid h-100">
-          <div class="row w-100 align-items-center">
-            <div class="col text-center">
-              <button class="btn btn-primary regular-button btn-lg"> Pagar </button>
+          <div className="row w-100 align-items-center">
+            <div className="col text-center">
+              <button className="btn btn-primary regular-button btn-lg"> Pagar </button>
             </div>
           </div>
         </div>

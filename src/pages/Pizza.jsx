@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 const Pizza = () => {
   const [pizza, setPizza] = useState([])
 
-  const getPizza = async () => {
+  const getPizza = async (id) => {
     const res = await fetch('http://localhost:5000/api/pizzas/p001')
     const data = await res.json()
     return setPizza(data)
