@@ -48,6 +48,7 @@ const CartProvider = ({ children }) => {
   const agregarPizza = (id) => {
     setCart((nuevoCart) => {
       const pizzaEncontrada = nuevoCart.find((pizza) => pizza.id === id);
+      const pizzaInfo = pizzas.find ((pizza) => pizza.id === id) //Obtener info de pizza
       if (pizzaEncontrada) {
         return nuevoCart.map((pizza) => {
           if (pizza.id === id) {
@@ -56,8 +57,12 @@ const CartProvider = ({ children }) => {
             return pizza
           }
         })
-      } else {
-        return [...nuevoCart, { id, count: 1 }]
+      } else if (pizzaInfo){
+        return [...nuevoCart, {...pizzaInfo, count:1}] //Agrega la info completa
+      }
+       else {
+        return nuevoCart //Si no encuentra la pizzaInfo no hace nada
+/*         return [...nuevoCart, { id, count: 1 }] */
       }
     })
   }
