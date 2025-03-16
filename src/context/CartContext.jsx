@@ -1,11 +1,11 @@
 import { createContext, useState, useEffect } from "react";
-import { pizzaCart } from '../pizzas';
+/* import { pizzaCart } from '../pizzas'; */
 
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
  
-  const [cart, setCart] = useState(pizzaCart)
+  const [cart, setCart] = useState([])
   const [pizzas, setPizzas] = useState([])
 
   const getPizzas = async () => {

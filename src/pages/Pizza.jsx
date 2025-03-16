@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { CartContext } from '../context/CartContext'
+import { useContext } from 'react'
 
 const Pizza = () => {
+  const {agregarPizza}= useContext(CartContext)
   const [pizza, setPizza] = useState([])
+  const {id} = useParams()
 
-  const getPizza = async (id) => {
-    const res = await fetch('http://localhost:5000/api/pizzas/p001')
+  const getPizza = async () => {
+    const res = await fetch(`http://localhost:5000/api/pizzas/${id}`)
     const data = await res.json()
     return setPizza(data)
   }
@@ -29,7 +34,7 @@ const Pizza = () => {
             <li className="list-group-item text-center fs-4">Precio: $ {pizza.price}</li>
           </ul>
           <div className="card-body d-flex justify-content-around">
-            <button type="button" className="btn btn-primary">Añadir</button>
+            <button type="button" className="btn btn-primary" onClick={() => agregarPizza(id)}>Añadir</button>
           </div>
         </div>
       </div>

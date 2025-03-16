@@ -2,9 +2,11 @@
 import '../components/cart.css'
 import { useContext } from 'react'
 import { CartContext } from '../context/CartContext'
+import { UserContext } from '../context/UserContext'
 
 const Cart = () => {
 const {cart, aumentar, quitar, calcularTotal}= useContext(CartContext)
+const {token} = useContext(UserContext)
 
   return (
     <>
@@ -29,8 +31,8 @@ const {cart, aumentar, quitar, calcularTotal}= useContext(CartContext)
         <h2>Total: $ {calcularTotal()}</h2>
         <div className="container-fluid h-100">
           <div className="row w-100 align-items-center">
-            <div className="col text-center">
-              <button className="btn btn-primary regular-button btn-lg"> Pagar </button>
+            <div className="col text-center"> {token ? 
+              <button className="btn btn-primary regular-button btn-lg"> Pagar </button> : ''}
             </div>
           </div>
         </div>

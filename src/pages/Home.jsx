@@ -7,8 +7,10 @@ import { useContext } from 'react'
 
 
 
+
 const Home = () => {
     const {pizzas}= useContext(CartContext)
+
 /*   const [pizzas, setPizzas] = useState([])
 
   const getPizzas = async () => {

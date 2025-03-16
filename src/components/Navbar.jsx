@@ -3,13 +3,16 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useContext } from 'react'
 import { CartContext } from '../context/CartContext';
+import { UserContext } from '../context/UserContext';
 
 const NavBar = () => {
   const {calcularTotal}= useContext(CartContext)
-  const token = false;
+   const {token} = useContext(UserContext)
+
+  const validateRoot = ({ isActive}) => isActive ? 'btn btn-secondary' :'btn btn-outline-light'
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container className='container bg-dark'>
@@ -17,15 +20,12 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link to='/' >
-              <Button variant="outline-light">Home</Button>
-            </Link>
-            <Link to={token ? '/profile' : '/login'} >
-              <Button variant="outline-light">{token ? "Profile" : "Login"}</Button>
-            </Link>
-            <Link to='/register'>
-              <Button variant="outline-light">{token ? "Logout" : "Register"}</Button>
-            </Link>
+            <NavLink to='/' className={validateRoot}> Home
+            </NavLink>
+            <NavLink to={token ? '/profile' : '/login'} className={validateRoot}> {token ? "Profile" : "Login"}
+            </NavLink>
+            <NavLink to={token ? '/profile' : '/register'} className={validateRoot}>{token ? 'Logout' : "Registrar"}
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
         <Link to='/cart'>
