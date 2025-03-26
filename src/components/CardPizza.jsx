@@ -1,15 +1,20 @@
 import { useContext } from "react"
 import { CartContext } from "../context/CartContext"
-/* import { Link } from "react-router-dom"; */
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+import { Toaster, toast } from 'sonner'
 
 const CardPizza = ({ img, nombre, ingredientes, precio, descripcion, id }) => {
-  const {agregarPizza}= useContext(CartContext)
+  const { agregarPizza } = useContext(CartContext)
+  const { token } = useContext(UserContext)
   const navigate = useNavigate();
   const irAPizza = () => {
-  navigate(`/pizza/${id}`);
+    navigate(`/pizza/${id}`);
   };
-  
+  const advertencia = () =>{
+    toast.error('Inicia sesión para añadir al carrito')
+  }
+
   return (
     <>
       <div className="card" key={id} style={{ width: '18rem' }}>
@@ -24,10 +29,12 @@ const CardPizza = ({ img, nombre, ingredientes, precio, descripcion, id }) => {
           <li className="list-group-item text-center fs-4">Precio: $ {precio}</li>
         </ul>
         <div className="card-body d-flex justify-content-around">
-{/*         <Link to='/pizza/p001' > */}
-        <button type="button" className="btn btn-primary" onClick={irAPizza}>Ver más</button>
-{/*         </Link> */}
-          <button className="btn btn-primary" onClick={() => agregarPizza(id)}>Añadir</button>
+          <button type="button" className="btn btn-primary" onClick={irAPizza}>Ver más</button>
+          <Toaster position="top-center" />
+          {token ?
+            <button className="btn btn-primary" onClick={() => agregarPizza(id)}>Añadir</button>
+            :
+            <button className="btn btn-primary" onClick={() => advertencia()}>Añadir</button>}
         </div>
       </div>
     </>

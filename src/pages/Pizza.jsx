@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CartContext } from '../context/CartContext'
 import { useContext } from 'react'
+import { Toaster, toast } from 'sonner'
+import { UserContext } from '../context/UserContext'
 
 const Pizza = () => {
   const {agregarPizza}= useContext(CartContext)
+    const { token } = useContext(UserContext)
   const [pizza, setPizza] = useState([])
   const {id} = useParams()
 
@@ -13,7 +16,10 @@ const Pizza = () => {
     const data = await res.json()
     return setPizza(data)
   }
-  
+
+  const advertencia = () =>{
+    toast.error('Inicia sesión para añadir al carrito')
+  }
   useEffect(() => {
     getPizza()
   }, [])
@@ -34,7 +40,11 @@ const Pizza = () => {
             <li className="list-group-item text-center fs-4">Precio: $ {pizza.price}</li>
           </ul>
           <div className="card-body d-flex justify-content-around">
-            <button type="button" className="btn btn-primary" onClick={() => agregarPizza(id)}>Añadir</button>
+          <Toaster position="top-center" />
+          {token ?
+            <button className="btn btn-primary" onClick={() => agregarPizza(id)}>Añadir</button>
+            :
+            <button className="btn btn-primary" onClick={() => advertencia()}>Añadir</button>}
           </div>
         </div>
       </div>

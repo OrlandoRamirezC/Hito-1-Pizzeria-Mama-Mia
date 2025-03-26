@@ -1,34 +1,49 @@
 import { Toaster, toast } from 'sonner'
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../context/UserContext';
 
 const RegisterPage = () => {
+  const { register } = useContext(UserContext)
+  const navigate = useNavigate()
+
   const [users, SetUsers] = useState({
     email: '',
-    contraseña: '',
-    confcontraseña: ''
+    password: '',
   })
+
+  const [error, setError] = useState(null)
+  // Actualiza los datos del formulario
   const handleChange = (e) => {
     SetUsers({ ...users, [e.target.name]: e.target.value })
   }
   //Para hacer que la información se retenga hasta que esté completa y se cliquee en botón
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const { email, contraseña, confcontraseña } = users
-    //Si están vacios ... alert
-    if (!email.trim() || !contraseña.trim() || !confcontraseña.trim()) {
-      toast.error('Llene todos los campos')
-      return
+    setError(null)
+
+    try {
+      const { email, password, confpassword } = users
+      //Si están vacios ... alert
+      if (!email.trim() || !password.trim() || !confpassword.trim()) {
+        toast.error('Llene todos los campos')
+        return
+      }
+      if (password.length < 6) {
+        toast.error('La contraseña debe tener al menos 6 caracteres')
+        return
+      }
+      if (password !== confpassword) {
+        toast.error('Las contraseñas no coinciden')
+        return
+      }
+      toast.success('Registro correcto')
+
+      await register(users.email, users.password)
+      navigate('/')
+    } catch (error) {
+      setError(error.response?.data?.error || 'Error al registrar usuario')
     }
-    if (contraseña.length < 6) {
-      toast.error('La contraseña debe tener al menos 6 caracteres')
-      return
-    }
-    if (contraseña !== confcontraseña) {
-      toast.error('Las contraseñas no coinciden')
-      return
-    }
-    toast.success('Registro correcto')
-    setUsers({ email: '', contraseña: '', confcontraseña: '' })
   }
   return (
     <>
@@ -41,12 +56,12 @@ const RegisterPage = () => {
             <input type='email' className='form-control' name='email' value={users.email} onChange={handleChange} placeholder='Escribe tu email' />
           </div>
           <div className="mb-3 col-md-3">
-            <label htmlFor="contraseña" className="form-label">Contraseña</label>
-            <input type='password' className='form-control' name='contraseña' value={users.contraseña} onChange={handleChange} placeholder='Escribe tu contraseña' />
+            <label htmlFor="password" className="form-label">Contraseña</label>
+            <input type='password' className='form-control' name='password' value={users.password} onChange={handleChange} placeholder='Escribe tu contraseña' />
           </div>
           <div className="mb-3 col-md-3">
-            <label htmlFor="confcontraseña" className="form-label">Confirmar contraseña</label>
-            <input type='password' className='form-control' name='confcontraseña' value={users.confcontraseña} onChange={handleChange} placeholder='Confirma tu contraseña' />
+            <label htmlFor="confpassword" className="form-label">Confirmar contraseña</label>
+            <input type='password' className='form-control' name='confpassword' value={users.confpassword} onChange={handleChange} placeholder='Confirma tu contraseña' />
           </div>
           <button type="submit" className='btn btn-primary'>Crear cuenta</button>
         </form>

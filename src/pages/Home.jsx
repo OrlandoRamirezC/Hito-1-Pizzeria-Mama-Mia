@@ -4,10 +4,6 @@ import { useEffect, useState } from 'react'
 import { CartContext } from '../context/CartContext'
 import { useContext } from 'react'
 
-
-
-
-
 const Home = () => {
     const {pizzas}= useContext(CartContext)
 
